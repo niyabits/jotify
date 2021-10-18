@@ -1,3 +1,5 @@
+import React from "react";
+import InlineEdit from "@/components/InlineEdit";
 import Layout from "@/components/Layout";
 import { styled } from "@/stitches";
 import type { NextPage } from "next";
@@ -8,11 +10,13 @@ const Container = styled("main", {
 });
 
 const Home: NextPage = () => {
+  const [value, setValue] = React.useState<string>("");
+
   return (
     <Layout>
       <Container>
-        <h1>Jotion</h1>
-        <input value="Text Value" />
+        <h1>Jotify</h1>
+        <InlineEdit value={value} setValue={setValue} />
       </Container>
     </Layout>
   );
