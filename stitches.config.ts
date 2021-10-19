@@ -38,5 +38,11 @@ export const { styled, getCssText, globalCss } = createStitches({
       13: "2.88rem",
       14: "3.24rem",
     },
+    radii: {
+      1: "3px",
+      2: "6px",
+      3: "9px",
+      4: "12px",
+    },
   },
 });

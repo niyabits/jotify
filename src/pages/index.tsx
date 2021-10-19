@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Container>
-        <h1>Jotify</h1>
+        {/*<h1 style={{ marginBottom: "24px" }}>Jotify</h1>*/}
         <InlineEdit value={value} setValue={setValue} />
       </Container>
     </Layout>

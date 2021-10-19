@@ -35,6 +35,8 @@ const globalStyles = globalCss({
   h2: { fontSize: "$9" },
   h3: { fontSize: "$8" },
   h4: { fontSize: "$7" },
+  h5: { fontSize: "$6" },
+  h6: { fontSize: "$5" },
 });
 
 export default globalStyles;

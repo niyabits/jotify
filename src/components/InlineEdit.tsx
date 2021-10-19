@@ -1,23 +1,34 @@
 import React from "react";
 import { styled } from "@/stitches";
+import Dropdown from "./Dropdown";
 
 const Container = styled("span", {
+  position: "relative",
+
   textarea: {
     width: "100%",
     backgroundColor: "transparent",
-    padding: "$2",
+    padding: "$2 $3",
     resize: "none",
     overflow: "hidden",
     minHeight: "$4",
     maxHeight: "$9",
+    borderRadius: "$1",
+    transition: "background-color 0.1s ease-in",
+
+    "&::placeholder": {
+      paddingLeft: "2px",
+    },
 
     "&:hover": {
-      backgroundColor: "#d3d3d3",
+      backgroundColor: "#f8f8f8",
+      transition: "background-color 0.2s ease-out",
       cursor: "pointer",
     },
 
     "&:focus": {
-      outline: "5px auto Highlight",
+      outline: "hsl(250,95%,97%) solid 1px",
+      border: "none",
     },
   },
 });
@@ -29,6 +40,7 @@ type Props = {
 
 const InlineEdit = ({ value, setValue }: Props) => {
   const [editingValue, setEditingValue] = React.useState(value);
+  const [dropDownVisible, setDropDownVisible] = React.useState<boolean>(false);
 
   const onInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
     const target = event.target as HTMLTextAreaElement;
@@ -38,8 +50,15 @@ const InlineEdit = ({ value, setValue }: Props) => {
     }
   };
 
-  const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
+  const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditingValue(event.target.value);
+
+    setDropDownVisible(false);
+
+    if (event.target.value === "/") {
+      setDropDownVisible(true);
+    }
+  };
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Escape") {
@@ -61,8 +80,9 @@ const InlineEdit = ({ value, setValue }: Props) => {
         onKeyDown={onKeyDown}
         onBlur={onBlur}
         onInput={onInput}
-        placeholder="Start typing..."
+        placeholder="Press  /  for options or start typing..."
       />
+      <Dropdown css={{ display: dropDownVisible ? "block" : "none" }} />
     </Container>
   );
 };
