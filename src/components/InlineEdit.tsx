@@ -41,7 +41,9 @@ type Props = {
 };
 
 const InlineEdit = ({ value, setValue, identifier }: Props) => {
-  const [editingValue, setEditingValue] = React.useState(value[0].text);
+  const [editingValue, setEditingValue] = React.useState(
+    value[identifier].text
+  );
   const [dropDownVisible, setDropDownVisible] = React.useState<boolean>(false);
 
   const onInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
@@ -90,6 +92,9 @@ const InlineEdit = ({ value, setValue, identifier }: Props) => {
       <Dropdown
         id="dropdown"
         css={{ display: dropDownVisible ? "block" : "none" }}
+        setBlocks={setValue}
+        blocks={value}
+        setDropDownVisible={setDropDownVisible}
       />
     </Container>
   );

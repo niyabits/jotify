@@ -1,9 +1,13 @@
 import { styled } from "@/stitches";
+import type * as Stitches from "@stitches/react";
 import React from "react";
+import type { Block } from "../pages/index";
 
 const Container = styled("div", {
   display: "inline-flex",
   flexDirection: "column",
+  background: "white",
+  zIndex: "1",
 
   position: "absolute",
   left: "0",
@@ -38,14 +42,51 @@ const Container = styled("div", {
   },
 });
 
-const Dropdown: React.FC = (props) => {
+const Dropdown = ({
+  css,
+  id,
+  setBlocks,
+  blocks,
+  setDropDownVisible,
+}: {
+  css: Stitches.CSS;
+  id: string;
+  setBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
+  blocks: Block[];
+  setDropDownVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const selectEvent = () => {
+    const newBlocks = [...blocks];
+    newBlocks.push({
+      type: "h1",
+      text: "",
+    });
+
+    setBlocks(newBlocks);
+    setDropDownVisible(false);
+  };
+
+  const handleClick = () => selectEvent();
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") {
+      selectEvent();
+    }
+  };
+
   return (
-    <Container {...props}>
+    <Container id={id} css={css}>
       <p>Blocks</p>
       <div id="options">
-        <div tabIndex={0}>Heading 1</div>
-        <div tabIndex={0}>Heading 2</div>
-        <div tabIndex={0}>Text</div>
+        <div tabIndex={0} onClick={handleClick} onKeyDown={handleKeyDown}>
+          Heading 1
+        </div>
+        <div tabIndex={0} onClick={handleClick} onKeyDown={handleKeyDown}>
+          Heading 2
+        </div>
+        <div tabIndex={0} onClick={handleClick} onKeyDown={handleKeyDown}>
+          Text
+        </div>
       </div>
     </Container>
   );
