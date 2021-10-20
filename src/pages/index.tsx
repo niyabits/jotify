@@ -29,8 +29,8 @@ const Home: NextPage = () => {
           <InlineEdit
             identifier={index}
             key={index}
-            value={blocks}
-            setValue={setBlocks}
+            blocks={blocks}
+            setBlocks={setBlocks}
           />
         ))}
       </Container>

@@ -35,15 +35,12 @@ const Container = styled("span", {
 });
 
 type Props = {
-  value: Block[];
-  setValue: React.Dispatch<React.SetStateAction<Block[]>>;
+  blocks: Block[];
+  setBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
   identifier: number;
 };
 
-const InlineEdit = ({ value, setValue, identifier }: Props) => {
-  const [editingValue, setEditingValue] = React.useState(
-    value[identifier].text
-  );
+const InlineEdit = ({ blocks, setBlocks, identifier }: Props) => {
   const [dropDownVisible, setDropDownVisible] = React.useState<boolean>(false);
 
   const onInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
@@ -55,7 +52,9 @@ const InlineEdit = ({ value, setValue, identifier }: Props) => {
   };
 
   const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEditingValue(event.target.value);
+    const newBlocks = [...blocks];
+    newBlocks[identifier].text = event.target.value;
+    setBlocks(newBlocks);
 
     setDropDownVisible(false);
 
@@ -71,10 +70,10 @@ const InlineEdit = ({ value, setValue, identifier }: Props) => {
   };
 
   const onBlur = (event: React.FocusEvent<HTMLTextAreaElement, Element>) => {
-    const newBlock = [...value];
+    const newBlock = [...blocks];
     newBlock[identifier].text = event.target.value;
 
-    setValue(newBlock);
+    setBlocks(newBlock);
   };
 
   return (
@@ -82,7 +81,7 @@ const InlineEdit = ({ value, setValue, identifier }: Props) => {
       <textarea
         rows={1}
         aria-label="Notes"
-        value={editingValue}
+        value={blocks[identifier].text}
         onChange={onChange}
         onKeyDown={onKeyDown}
         onBlur={onBlur}
@@ -92,9 +91,10 @@ const InlineEdit = ({ value, setValue, identifier }: Props) => {
       <Dropdown
         id="dropdown"
         css={{ display: dropDownVisible ? "block" : "none" }}
-        setBlocks={setValue}
-        blocks={value}
+        setBlocks={setBlocks}
+        blocks={blocks}
         setDropDownVisible={setDropDownVisible}
+        identifier={identifier}
       />
     </Container>
   );
