@@ -45,18 +45,27 @@ const Container = styled("div", {
 const Dropdown = ({
   css,
   id,
+  identifier,
   setBlocks,
   blocks,
   setDropDownVisible,
 }: {
   css: Stitches.CSS;
   id: string;
+  identifier: number;
   setBlocks: React.Dispatch<React.SetStateAction<Block[]>>;
   blocks: Block[];
   setDropDownVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const selectEvent = () => {
     const newBlocks = [...blocks];
+    const currBlockText = blocks[identifier].text;
+
+    newBlocks[identifier].text =
+      currBlockText.substr(currBlockText.length - 1) === "/"
+        ? currBlockText.slice(0, -1)
+        : currBlockText;
+
     newBlocks.push({
       type: "h1",
       text: "",
