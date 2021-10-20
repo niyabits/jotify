@@ -9,14 +9,30 @@ const Container = styled("main", {
   margin: "auto",
 });
 
+export type Block = {
+  type: string;
+  text: string;
+};
+
 const Home: NextPage = () => {
-  const [value, setValue] = React.useState<string>("");
+  const [blocks, setBlocks] = React.useState<Block[]>([
+    {
+      type: "h1",
+      text: "",
+    },
+  ]);
 
   return (
     <Layout>
       <Container>
-        {/*<h1 style={{ marginBottom: "24px" }}>Jotify</h1>*/}
-        <InlineEdit value={value} setValue={setValue} />
+        {blocks.map((_, index) => (
+          <InlineEdit
+            identifier={index}
+            key={index}
+            value={blocks}
+            setValue={setBlocks}
+          />
+        ))}
       </Container>
     </Layout>
   );

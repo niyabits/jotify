@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@/stitches";
 import Dropdown from "./Dropdown";
+import type { Block } from "../pages";
 
 const Container = styled("span", {
   position: "relative",
@@ -34,12 +35,13 @@ const Container = styled("span", {
 });
 
 type Props = {
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  value: Block[];
+  setValue: React.Dispatch<React.SetStateAction<Block[]>>;
+  identifier: number;
 };
 
-const InlineEdit = ({ value, setValue }: Props) => {
-  const [editingValue, setEditingValue] = React.useState(value);
+const InlineEdit = ({ value, setValue, identifier }: Props) => {
+  const [editingValue, setEditingValue] = React.useState(value[0].text);
   const [dropDownVisible, setDropDownVisible] = React.useState<boolean>(false);
 
   const onInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
@@ -55,7 +57,7 @@ const InlineEdit = ({ value, setValue }: Props) => {
 
     setDropDownVisible(false);
 
-    if (event.target.value === "/") {
+    if (event.target.value.includes("/")) {
       setDropDownVisible(true);
     }
   };
@@ -67,7 +69,10 @@ const InlineEdit = ({ value, setValue }: Props) => {
   };
 
   const onBlur = (event: React.FocusEvent<HTMLTextAreaElement, Element>) => {
-    setValue(event.target.value);
+    const newBlock = [...value];
+    newBlock[identifier].text = event.target.value;
+
+    setValue(newBlock);
   };
 
   return (
@@ -82,7 +87,10 @@ const InlineEdit = ({ value, setValue }: Props) => {
         onInput={onInput}
         placeholder="Press  /  for options or start typing..."
       />
-      <Dropdown css={{ display: dropDownVisible ? "block" : "none" }} />
+      <Dropdown
+        id="dropdown"
+        css={{ display: dropDownVisible ? "block" : "none" }}
+      />
     </Container>
   );
 };
