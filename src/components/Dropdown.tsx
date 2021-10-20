@@ -1,5 +1,5 @@
-import React from "react";
 import { styled } from "@/stitches";
+import React from "react";
 
 const Container = styled("div", {
   display: "inline-flex",

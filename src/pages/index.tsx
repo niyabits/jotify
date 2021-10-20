@@ -1,8 +1,8 @@
-import React from "react";
 import InlineEdit from "@/components/InlineEdit";
 import Layout from "@/components/Layout";
 import { styled } from "@/stitches";
 import type { NextPage } from "next";
+import React from "react";
 
 const Container = styled("main", {
   maxWidth: "750px",

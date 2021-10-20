@@ -1,7 +1,7 @@
-import React from "react";
 import { styled } from "@/stitches";
+import React from "react";
+import type { Block } from "../pages/index";
 import Dropdown from "./Dropdown";
-import type { Block } from "../pages";
 
 const Container = styled("span", {
   position: "relative",
