@@ -1,7 +1,6 @@
 import InlineEdit from "@/components/InlineEdit";
 import Layout from "@/components/Layout";
 import { styled } from "@/stitches";
-import type { NextPage } from "next";
 import React from "react";
 
 const Container = styled("main", {
@@ -14,7 +13,7 @@ export type Block = {
   text: string;
 };
 
-const Home: NextPage = () => {
+const Home = React.forwardRef(() => {
   const [blocks, setBlocks] = React.useState<Block[]>([
     {
       type: "h1",
@@ -25,17 +24,21 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Container>
-        {blocks.map((_, index) => (
-          <InlineEdit
-            identifier={index}
-            key={index}
-            blocks={blocks}
-            setBlocks={setBlocks}
-          />
-        ))}
+        {blocks.map((_, index) => {
+          return (
+            <InlineEdit
+              identifier={index}
+              key={index}
+              blocks={blocks}
+              setBlocks={setBlocks}
+            />
+          );
+        })}
       </Container>
     </Layout>
   );
-};
+});
+
+Home.displayName = "Home";
 
 export default Home;
