@@ -25,7 +25,8 @@
       "@/stitches": [
         "stitches.config.ts"
       ]
-    }
+    },
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",
