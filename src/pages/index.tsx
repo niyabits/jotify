@@ -13,7 +13,8 @@ export type Block = {
   text: string;
 };
 
-const Home = React.forwardRef(() => {
+const Home = () => {
+  const blockContainerRef = React.useRef<HTMLDivElement>(null);
   const [blocks, setBlocks] = React.useState<Block[]>([
     {
       type: "h1",
@@ -21,24 +22,30 @@ const Home = React.forwardRef(() => {
     },
   ]);
 
+  React.useEffect(() => {
+    if (blockContainerRef === null) {
+      blockContainerRef?.current?.lastChild?.firstChild.focus();
+    }
+  }, [blocks.length]);
+
   return (
     <Layout>
       <Container>
-        {blocks.map((_, index) => {
-          return (
-            <InlineEdit
-              identifier={index}
-              key={index}
-              blocks={blocks}
-              setBlocks={setBlocks}
-            />
-          );
-        })}
+        <div ref={blockContainerRef}>
+          {blocks.map((_, index) => {
+            return (
+              <InlineEdit
+                identifier={index}
+                key={index}
+                blocks={blocks}
+                setBlocks={setBlocks}
+              />
+            );
+          })}
+        </div>
       </Container>
     </Layout>
   );
-});
-
-Home.displayName = "Home";
+};
 
 export default Home;

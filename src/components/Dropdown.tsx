@@ -66,19 +66,23 @@ const Dropdown = ({
         ? currBlockText.slice(0, -1)
         : currBlockText;
 
-    newBlocks.push({
+    setDropDownVisible(false);
+
+    // TODO: Currently the block is pushed at the end of the array, but it should be pushed next to the current block
+    const newBlock = {
       type: "h1",
       text: "",
-    });
+    };
+    newBlocks.push(newBlock);
 
     setBlocks(newBlocks);
-    setDropDownVisible(false);
   };
 
   const handleClick = () => selectEvent();
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter") {
+      event.preventDefault();
       selectEvent();
     }
   };
