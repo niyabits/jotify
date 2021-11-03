@@ -61,6 +61,7 @@ const Dropdown = ({
     const newBlocks = [...blocks];
     const currBlockText = blocks[identifier].text;
 
+    // Remove / from the end of the text
     newBlocks[identifier].text =
       currBlockText.substr(currBlockText.length - 1) === "/"
         ? currBlockText.slice(0, -1)

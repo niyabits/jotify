@@ -43,6 +43,7 @@ type Props = {
 const InlineEdit = ({ blocks, setBlocks, identifier }: Props) => {
   const [dropDownVisible, setDropDownVisible] = React.useState<boolean>(false);
 
+  // Expand the textarea when more text comes in
   const onInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
     const target = event.target as HTMLTextAreaElement;
     if (target.scrollHeight > 33) {
@@ -52,10 +53,12 @@ const InlineEdit = ({ blocks, setBlocks, identifier }: Props) => {
   };
 
   const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // Update the text in the current block
     const newBlocks = [...blocks];
     newBlocks[identifier].text = event.target.value;
     setBlocks(newBlocks);
 
+    // Remove dropdown if there's no "/"
     setDropDownVisible(false);
 
     if (event.target.value.includes("/")) {
