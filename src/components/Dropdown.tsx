@@ -57,7 +57,7 @@ const Dropdown = ({
   blocks: Block[];
   setDropDownVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const selectEvent = () => {
+  const selectEvent = (type: string) => {
     const newBlocks = [...blocks];
     const currBlockText = blocks[identifier].text;
 
@@ -71,7 +71,7 @@ const Dropdown = ({
 
     // TODO: Currently the block is pushed at the end of the array, but it should be pushed next to the current block
     const newBlock = {
-      type: "h1",
+      type,
       text: "",
     };
     newBlocks.push(newBlock);
@@ -79,26 +79,42 @@ const Dropdown = ({
     setBlocks(newBlocks);
   };
 
-  const handleClick = () => selectEvent();
+  const handleH1Click = () => selectEvent("h1");
+  const handleH2Click = () => selectEvent("h2");
+  const handleParaClick = () => selectEvent("p");
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+    type: string
+  ) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      selectEvent();
+      selectEvent(type);
     }
   };
+
+  const handleH1KeyDown = (event: React.KeyboardEvent<HTMLDivElement>) =>
+    handleKeyDown(event, "h1");
+  const handleH2KeyDown = (event: React.KeyboardEvent<HTMLDivElement>) =>
+    handleKeyDown(event, "h2");
+  const handleParaKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) =>
+    handleKeyDown(event, "p");
 
   return (
     <Container id={id} css={css}>
       <p>Blocks</p>
       <div id="options">
-        <div tabIndex={0} onClick={handleClick} onKeyDown={handleKeyDown}>
+        <div tabIndex={0} onClick={handleH1Click} onKeyDown={handleH1KeyDown}>
           Heading 1
         </div>
-        <div tabIndex={0} onClick={handleClick} onKeyDown={handleKeyDown}>
+        <div tabIndex={0} onClick={handleH2Click} onKeyDown={handleH2KeyDown}>
           Heading 2
         </div>
-        <div tabIndex={0} onClick={handleClick} onKeyDown={handleKeyDown}>
+        <div
+          tabIndex={0}
+          onClick={handleParaClick}
+          onKeyDown={handleParaKeyDown}
+        >
           Text
         </div>
       </div>

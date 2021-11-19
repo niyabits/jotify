@@ -5,8 +5,9 @@ import Dropdown from "@/components/Dropdown";
 
 const Container = styled("span", {
   position: "relative",
+});
 
-  textarea: {
+const TextArea = styled('textarea', {
     width: "100%",
     backgroundColor: "transparent",
     padding: "$2 $3",
@@ -31,8 +32,21 @@ const Container = styled("span", {
       outline: "hsl(250,95%,97%) solid 1px",
       border: "none",
     },
-  },
-});
+
+    variants: {
+      fontSize: {
+        small: {
+          fontSize: "$4"
+        },
+        medium: {
+          fontSize: "$6"
+        },
+        large: {
+          fontSize: "$8"
+        },
+      },
+    }
+})
 
 type Props = {
   blocks: Block[];
@@ -78,10 +92,16 @@ const InlineEdit = ({ blocks, setBlocks, identifier }: Props) => {
 
     setBlocks(newBlock);
   };
+  const blockType = blocks[identifier].type;
+
+  let fontSize = "p";
+  if(blockType === "h1") fontSize = "large";
+  if(blockType === "h2") fontSize = "medium";
+  if(blockType === "p") fontSize = "p";
 
   return (
     <Container>
-      <textarea
+      <TextArea
         rows={1}
         aria-label="Notes"
         value={blocks[identifier].text}
@@ -89,7 +109,8 @@ const InlineEdit = ({ blocks, setBlocks, identifier }: Props) => {
         onKeyDown={onKeyDown}
         onBlur={onBlur}
         onInput={onInput}
-        placeholder="Press  /  for options or start typing..."
+        placeholder={"Press  /  for options or start typing..."}
+        fontSize={fontSize}
       />
       <Dropdown
         id="dropdown"
