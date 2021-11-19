@@ -23,8 +23,10 @@ const Home = () => {
   ]);
 
   React.useEffect(() => {
-    if (blockContainerRef === null) {
-      blockContainerRef?.current?.lastChild?.firstChild.focus();
+    if (blockContainerRef.current !== null) {
+      (
+        blockContainerRef?.current?.lastChild?.firstChild as HTMLElement
+      ).focus();
     }
   }, [blocks.length]);
 
